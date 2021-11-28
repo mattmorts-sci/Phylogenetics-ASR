@@ -5,7 +5,7 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.1.1 (211129)
+Version 1.1.2 (211129)
 """
 
 import pandas as pd
@@ -88,7 +88,7 @@ def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
     )
     log(
         f"All v. all BLAST search run against {infile} with an E-value \
-threshold of {E_value_threshold}. Network file output/BLAST/{date}_\
-{project}_dataset_network_{E_value_threshold}.csv generated with a run time\
+threshold of {E_value_threshold}. Network file {project}/output/BLAST/{date}_\
+dataset_network_{E_value_threshold}.csv generated with a run time\
 of {run_time} hh:mm:ss"
     )

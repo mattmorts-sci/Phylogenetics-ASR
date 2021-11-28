@@ -6,7 +6,7 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.3.2 (211118)
+Version 1.3.3 (211118)
 """
 
 from Bio import SeqIO
@@ -59,7 +59,7 @@ def cleaner(file, data_source, project, por_n=0):
     # Write the clean sequences
     # Create a file with the cleaned sequences
     with open(
-        f"output/{DATE}_{project}_{data_source}_cleaned.fasta", "w+"
+        f"{project}/output/{DATE}_{data_source}_cleaned.fasta", "w+"
     ) as output_file:
         # Just read the hash table and write on the file as a fasta format
         # as key and variable
@@ -69,7 +69,7 @@ def cleaner(file, data_source, project, por_n=0):
     # Creates a file for dropped sequences using the same methods as above but
     # taking the sequences from the 'duplicate' dict.
     with open(
-        f"output/{DATE}_{project}_{data_source}_cleaner_dropped_seq.fasta", "w+"
+        f"{project}/output/{DATE}_{data_source}_cleaner_dropped_seq.fasta", "w+"
     ) as dropped_file:
         for sequence in duplicate:
             dropped_file.write(">" + duplicate[sequence] + "\n" + sequence + "\n")
@@ -78,20 +78,20 @@ def cleaner(file, data_source, project, por_n=0):
     # Printing and logging the summary
     log(
         f"Sequence cleaner used to remove duplicate sequences and those with \
-invalid amino acids, output was written to {DATE}_{project}_\
+invalid amino acids, output was written to {project}/{DATE}_\
 {data_source}_cleaned.fasta. {d_count} sequences were dropped \
-and written to output/{DATE}_{project}_{data_source}_cleaner_\
+and written to {project}/output/{DATE}_{data_source}_cleaner_\
 dropped_seq.fasta, there were {dup_count} instances of duplicate \
 or ambiguous sequences"
     )
     print(
-        f"{len(sequences)} were kept, output was written to {DATE}_{project}\
+        f"{len(sequences)} were kept, output was written to {project}/{DATE}\
 _{data_source}_cleaned.fasta. {d_count} sequences were dropped and \
-written to output/{DATE}_{project}_{data_source}_cleaner_dropped_seq.fasta"
+written to {project}/output/{DATE}_{data_source}_cleaner_dropped_seq.fasta"
     )
     print(f"There were {dup_count} instances of duplicate or ambiguous sequences.")
 
-    seq_file = f"output/{DATE}_{project}_{data_source}_cleaned.fasta"
+    seq_file = f"{project}/output/{DATE}_{data_source}_cleaned.fasta"
 
     print(seq_file)
 
@@ -134,7 +134,7 @@ def reviewed_unreviewed(file, file2, data_source, project):
     # Write the clean sequences
     # Create a file with the cleaned sequences
     with open(
-        f"output/{DATE}_{project}_{data_source}_rev_unrev_deduped.fasta",
+        f"{project}/output/{DATE}_{data_source}_rev_unrev_deduped.fasta",
         "w+",
     ) as output_file:
         # Just read the hash table and write on the file as a fasta format
@@ -145,7 +145,7 @@ def reviewed_unreviewed(file, file2, data_source, project):
     # Creates a file for dropped sequences using the same methods as above but
     # taking the sequences from the 'duplicate' dict.
     with open(
-        f"output/{DATE}_{project}_{data_source}_rev_unrev_dropped.fasta", "w+"
+        f"{project}/output/{DATE}_{data_source}_rev_unrev_dropped.fasta", "w+"
     ) as dropped_file:
         for sequence in duplicate:
             dropped_file.write(">" + duplicate[sequence] + "\n" + sequence + "\n")
@@ -155,16 +155,16 @@ def reviewed_unreviewed(file, file2, data_source, project):
     log(
         f"Sequence cleaner used to remove sequences from {file2} that are\
 duplicated in {file} and the datasets combined, output was written to \
-output/{DATE}_{project}_{data_source}_rev_unrev_deduped.fasta. {d_count} \
-sequences were dropped and written to output/{DATE}_{project}_{data_source}\
+{project}/output/{DATE}_{data_source}_rev_unrev_deduped.fasta. {d_count} \
+sequences were dropped and written to {project}/output/{DATE}_{data_source}\
 _rev_unrev_dropped.fasta"
     )
     print(
-        f"{len(sequences)} sequences were kept, output was written to {DATE}_\
-{project}_{data_source}_rev_unrev_deduped.fasta. {d_count} sequences were \
+        f"{len(sequences)} sequences were kept, output was written to {project}/\
+{DATE}_{data_source}_rev_unrev_deduped.fasta. {d_count} sequences were \
 dropped and written to output/test_joint_cleaned_cleaner_dropped_seq.fasta"
     )
 
-    seq_file = f"output/{DATE}_{project}_{data_source}_rev_unrev_deduped.fasta"
+    seq_file = f"{project}/output/{DATE}_{data_source}_rev_unrev_deduped.fasta"
     print("")
     print(seq_file)
