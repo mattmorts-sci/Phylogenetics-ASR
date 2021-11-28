@@ -5,17 +5,17 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.3.1 (211117)
+Version 1.3.2 (211129)
 """
 
 from Bio import SeqIO
 from bioservices import UniProt
 from datetime import datetime, timedelta
-from log import log
+from modules.log import log
 import pandas as pd
-from progress import update_progress
+from modules.progress import update_progress
 from time import time
-from utilities import dict_to_fasta
+from modules.utilities import dict_to_fasta
 
 date = datetime.now().strftime("%y%m%d")
 
@@ -39,8 +39,27 @@ def annotations(file, data_source, project, delim="|", el_num=1):
 
     # This variable forms the column names in the resulting csv, it
     # will need to be modified depending on the data set.
-    annotations = "Entry\tEntry name\tStatus\tProtein names\tGene names\
-\tOrganism\tLength\n"
+    annotations = "id, length, mass, genes(PREFERRED), reviewed, lineage(SUPERKINGDOM), lineage(KINGDOM), lineage(PHYLUM), lineage(CLASS), lineage(ORDER), lineage(FAMILY), lineage(GENUS), lineage(SPECIES), lineage-id(SPECIES), database(chebi), database(chebi(Catalytic activity)), database(chebi(Cofactor)), database(pdb), database(pfam)"
+    columns = "id\t\
+length\t\
+mass\t\
+genes\t\
+reviewed\t\
+Superkingdom\t\
+Kingdom\t\
+Phylum\t\
+Class\t\
+Order\t\
+Family\t\
+Genus\t\
+Species\t\
+Species_id\t\
+database(chebi)\t\
+chebi_Catalytic_activity\t\
+chebi_Cofactor\t\
+database_pdb\t\
+database_pfam"
+
     # Specifies the BioServices service used, creates a counter
     service = UniProt()
     anno_count = 0
@@ -51,18 +70,18 @@ def annotations(file, data_source, project, delim="|", el_num=1):
     tot = len(tuple(SeqIO.parse(file, "fasta")))
 
     with open(
-        f"output/{date}_{project}_{data_source}_filt_\
+        f"{project}/output/{date}_{data_source}_filt_\
 annotations.txt",
         "w+",
     ) as anno_test:
-        anno_test.write(annotations)  # Writes the column names to the csv
+        anno_test.write(columns)  # Writes the column names to the csv
         # Parses the fasta file and isolates the UniProt Entry from the header
         # as i. Passes i to the search string which is assigned to variable n
         with open(file, "r") as seqs:
             for seq_record in SeqIO.parse(seqs, "fasta"):
                 i = seq_record.id.split(delim)
                 try:
-                    n = service.search(i[el_num], frmt="tab")
+                    n = service.search(i[el_num], columns=annotations, frmt="tab")
                 except IndexError:
                     print("IndexError: Fasta header doesn't match expected format")
                     print("Caught error at:")
@@ -98,7 +117,7 @@ annotations.txt",
 
     print(
         f"Annotations were retrieved or attempted for {anno_count} sequences \
-from {file} and outputted to 'output/{date}_{project}_{data_source}_filt_\
+from {file} and outputted to '{project}/output/{date}_{data_source}_filt_\
 annotations.txt'"
     )
     log(
@@ -197,18 +216,18 @@ def reviewed(file, PROJECT):
 
     # Reviewed sequences
     # Variable with the name of the outputted fasta file
-    output_file = f"output/{date}_{PROJECT}_reviewed.fasta"
+    output_file = f"{PROJECT}/output/{date}_reviewed.fasta"
     # Runs the dict_to_fasta function in the utilities module
     dict_to_fasta(reviewed_dict, output_file)
 
     # Unreviewed sequences
     # Variable with the name of the outputted fasta file
-    output_file = f"output/{date}_{PROJECT}_unreviewed.fasta"
+    output_file = f"{PROJECT}/output/{date}_unreviewed.fasta"
     # Runs the dict_to_fasta function in the utilities module
     dict_to_fasta(unreviewed_dict, output_file)
 
-    log(f"{rev} sequences were written to output/{date}_{PROJECT}_reviewed.fasta")
-    log(f"{unrev} sequences were written to output/{date}_{PROJECT}_unreviewed.fasta")
+    log(f"{rev} sequences were written to {PROJECT}/output/{date}_reviewed.fasta")
+    log(f"{unrev} sequences were written to {PROJECT}/output/{date}_unreviewed.fasta")
 
-    print(f"{rev} sequences were written to output/{date}_{PROJECT}_reviewed.fasta")
-    print(f"{unrev} sequences were written to output/{date}_{PROJECT}_unreviewed.fasta")
+    print(f"{rev} sequences were written to {PROJECT}/output/{date}_reviewed.fasta")
+    print(f"{unrev} sequences were written to {PROJECT}/output/{date}_unreviewed.fasta")

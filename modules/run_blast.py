@@ -10,7 +10,7 @@ Version 1.1.1 (211129)
 
 import pandas as pd
 import os as os
-from log import log
+from modules.log import log
 from datetime import datetime, timedelta
 from time import time
 
@@ -36,7 +36,7 @@ def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
     date = datetime.now().strftime("%y%m%d")
 
     # Sets the name for the database files
-    db_file = f"output/BLAST/{date}_{project}_dataset_db"
+    db_file = f"{project}/output/BLAST/{date}_dataset_db"
 
     # Make a BLAST database using the non-redundant/annotated sequence dataset
     os.system(f"makeblastdb -in {infile} -dbtype prot -out {db_file}")
@@ -69,7 +69,7 @@ def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
     blast_out = pd.read_csv(f"{outblast}", delimiter="\t", names=cols)
 
     blast_out.to_csv(
-        f"output/BLAST/{date}_{project}_dataset_network_{E_value_threshold}\
+        f"{project}/output/BLAST/{date}_dataset_network_{E_value_threshold}\
 .csv"
     )
 
@@ -83,7 +83,7 @@ def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
     print(f"Run time: {run_time} hh:mm:ss")
 
     print(
-        f"Network file output/BLAST/{date}_{project}_dataset_network_\
+        f"Network file {project}/output/BLAST/{date}_dataset_network_\
 {E_value_threshold}.csv generated"
     )
     log(

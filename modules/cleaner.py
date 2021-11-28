@@ -10,7 +10,7 @@ Version 1.3.2 (211118)
 """
 
 from Bio import SeqIO
-from log import log
+from modules.log import log
 from datetime import datetime
 
 # Formats the current date, assigns to variable date

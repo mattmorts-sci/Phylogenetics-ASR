@@ -5,12 +5,12 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.0.3 (211128)
+Version 1.0.3 (211129)
 """
 
 from Bio import SeqIO
 from datetime import datetime
-from log import log
+from modules.log import log
 
 
 def size_filter(file, project, data_source, logic, seq_len):
@@ -32,7 +32,7 @@ def size_filter(file, project, data_source, logic, seq_len):
     seq_dict = sequence_length_filter(file, logic, seq_len)
 
     # Writes the filtered sequences in seq_dict to file
-    filt_file = f"output/{date}_{project}_{data_source}_size_filt.fasta"
+    filt_file = f"{project}/output/{date}_{data_source}_size_filt.fasta"
 
     with open(filt_file, "w") as filt:
         for k, v in seq_dict.items():
@@ -40,12 +40,12 @@ def size_filter(file, project, data_source, logic, seq_len):
 
     # Printing and logging the summary
     log(
-        f'{len(seq_dict)} filtered sequences were outputed to "output/{date}\
-_{project}_{data_source}_size_filt.fasta"'
+        f'{len(seq_dict)} filtered sequences were outputed to "{project}/output/{date}\
+_{data_source}_size_filt.fasta"'
     )
     print(
-        f'{len(seq_dict)} filtered sequences were outputed to "output/{date}\
-_{project}_{data_source}_size_filt.fasta"'
+        f'{len(seq_dict)} filtered sequences were outputed to "{project}/output/{date}\
+_{data_source}_size_filt.fasta"'
     )
 
 
