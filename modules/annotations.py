@@ -40,7 +40,7 @@ def annotations(file, data_source, project, delim="|", el_num=1):
     # This variable forms the column names in the resulting csv, it
     # will need to be modified depending on the data set.
     annotations = "id, length, mass, genes(PREFERRED), reviewed, lineage(SUPERKINGDOM), lineage(KINGDOM), lineage(PHYLUM), lineage(CLASS), lineage(ORDER), lineage(FAMILY), lineage(GENUS), lineage(SPECIES), lineage-id(SPECIES), database(chebi), database(chebi(Catalytic activity)), database(chebi(Cofactor)), database(pdb), database(pfam)"
-    columns = "id\t\
+    columns = "Entry\t\
 length\t\
 mass\t\
 genes\t\
