@@ -44,7 +44,7 @@ def annotations(file, data_source, project, delim="|", el_num=1):
 length\t\
 mass\t\
 genes\t\
-reviewed\t\
+Status\t\
 Superkingdom\t\
 Kingdom\t\
 Phylum\t\
