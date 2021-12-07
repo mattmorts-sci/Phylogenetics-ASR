@@ -5,7 +5,7 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.0.2 (211129)
+Version 1.0.3 (211208)
 """
 
 
@@ -17,7 +17,7 @@ def uniprot(pfam_id, output, sp_output, source="UniProt"):
     from bioservices import UniProt, PDB
     from Bio import SeqIO
     from datetime import timedelta
-    from log import log
+    from modules.log import log
     from time import time
 
     # Start point for run time calc.

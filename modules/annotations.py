@@ -5,7 +5,7 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.3.2 (211129)
+Version 1.3.3 (211207)
 """
 
 from Bio import SeqIO
