@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 from time import time
 
 
-def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
+def blast(infile, project, E_value_threshold="10e-10", cpus="2", path=None):
     """
     IMPORTANT: This function assumes blast has been added to the path environment
     Runs BLAST locally using a fasta file to generate the database. A all v.
@@ -39,14 +39,14 @@ def blast(infile, project, E_value_threshold="10e-10", cpus="2"):
     db_file = f"{project}/output/BLAST/{date}_dataset_db"
 
     # Make a BLAST database using the non-redundant/annotated sequence dataset
-    os.system(f"makeblastdb -in {infile} -dbtype prot -out {db_file}")
+    os.system(f"{path}makeblastdb -in {infile} -dbtype prot -out {db_file}")
 
     # Perform an all.vs.all BLAST within the database
     outblast = f"{db_file}_blast_{E_value_threshold}"
 
     # Runs blastp, calling blast+
     os.system(
-        f"blastp -db {db_file} -query {infile} \
+        f"{path}blastp -db {db_file} -query {infile} \
 -outfmt 6 -out {outblast} -evalue {E_value_threshold} -num_threads {cpus}"
     )
 

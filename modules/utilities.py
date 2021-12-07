@@ -15,7 +15,7 @@ def dict_to_fasta(fasta_dict, outfile):
     and the value is the sequence and creates a fasta file.
     Takes two arguments the dict and then the name of the output file.
     """
-    from log import log
+    from modules.log import log
 
     count = 0
     # Creates a fasta file from the dict above (fasta_dict)

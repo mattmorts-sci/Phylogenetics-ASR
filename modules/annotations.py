@@ -5,7 +5,7 @@ matthew.mortimer@anu.edu.au
 ORCID id: https://orcid.org/0000-0002-8135-9319
 Python 3
 
-Version 1.3.2 (211129)
+Version 1.3.3 (211207)
 """
 
 from Bio import SeqIO
@@ -58,7 +58,7 @@ database(chebi)\t\
 chebi_Catalytic_activity\t\
 chebi_Cofactor\t\
 database_pdb\t\
-database_pfam"
+database_pfam\n"
 
     # Specifies the BioServices service used, creates a counter
     service = UniProt()
@@ -152,7 +152,7 @@ def indexing(anno_file, seq_file, project, delim="|", el_num=1):
         sequence = str(seq_record.seq).upper()
         # Fasta header is formated, spliting on '_' and keeping
         # the first element
-        k = seq_record.id.split(delim)
+        k = seq_record.id.lstrip(">").split(delim)
         seq_dict[k[el_num]] = sequence
 
     # Creates a dataframe from the above dict
@@ -166,7 +166,7 @@ def indexing(anno_file, seq_file, project, delim="|", el_num=1):
     master_index = pd.merge(anno_df, seq_df, how="inner", on="Entry")
 
     # Writes the above, merged, dataframe to file
-    output_file = f"output/{date}_{project}_PFAM_master_index.csv"
+    output_file = f"{project}/output/{date}_PFAM_master_index.csv"
     master_index.to_csv(output_file, sep=",", index=False)
 
     # Prints and logs summary
