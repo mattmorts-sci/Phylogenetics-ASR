@@ -40,11 +40,11 @@ def annotations(file, data_source, project, delim="|", el_num=1):
     # This variable forms the column names in the resulting csv, it
     # will need to be modified depending on the data set.
     annotations = "id, length, mass, genes(PREFERRED), reviewed, lineage(SUPERKINGDOM), lineage(KINGDOM), lineage(PHYLUM), lineage(CLASS), lineage(ORDER), lineage(FAMILY), lineage(GENUS), lineage(SPECIES), lineage-id(SPECIES), database(chebi), database(chebi(Catalytic activity)), database(chebi(Cofactor)), database(pdb), database(pfam)"
-    columns = "id\t\
+    columns = "Entry\t\
 length\t\
 mass\t\
 genes\t\
-reviewed\t\
+Status\t\
 Superkingdom\t\
 Kingdom\t\
 Phylum\t\
@@ -58,7 +58,7 @@ database(chebi)\t\
 chebi_Catalytic_activity\t\
 chebi_Cofactor\t\
 database_pdb\t\
-database_pfam"
+database_pfam\n"
 
     # Specifies the BioServices service used, creates a counter
     service = UniProt()
@@ -152,7 +152,7 @@ def indexing(anno_file, seq_file, project, delim="|", el_num=1):
         sequence = str(seq_record.seq).upper()
         # Fasta header is formated, spliting on '_' and keeping
         # the first element
-        k = seq_record.id.split(delim)
+        k = seq_record.id.lstrip(">").split(delim)
         seq_dict[k[el_num]] = sequence
 
     # Creates a dataframe from the above dict
@@ -166,7 +166,7 @@ def indexing(anno_file, seq_file, project, delim="|", el_num=1):
     master_index = pd.merge(anno_df, seq_df, how="inner", on="Entry")
 
     # Writes the above, merged, dataframe to file
-    output_file = f"output/{date}_{project}_PFAM_master_index.csv"
+    output_file = f"{project}/output/{date}_PFAM_master_index.csv"
     master_index.to_csv(output_file, sep=",", index=False)
 
     # Prints and logs summary
